@@ -1,0 +1,63 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Gestión de Productos - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<div class="gestion-header">
+    <h1 class="page-title">📦 Gestión de Productos</h1>
+    <div class="gestion-actions">
+        <a href="{% url 'catalogo:crear_producto' %}" class="btn btn-primary">➕ Nuevo Producto</a>
+        <a href="{% url 'catalogo:gestion_categorias' %}" class="btn btn-secondary">📁 Categorías</a>
+        <a href="{% url 'catalogo:editar_nosotros' %}" class="btn btn-secondary">ℹ️ Quiénes Somos</a>
+    </div>
+</div>
+
+<div class="gestion-table-container">
+    <table class="gestion-table">
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>
+                        {% if producto.foto %}
+                            <img src="{{ producto.foto.url }}" alt="{{ producto.nombre }}" class="table-img">
+                        {% else %}
+                            <div class="table-img placeholder">🎊</div>
+                        {% endif %}
+                    </td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.categoria.nombre }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td>
+                        {% if producto.disponible %}
+                            <span class="badge badge-success">Disponible</span>
+                        {% else %}
+                            <span class="badge badge-danger">No disponible</span>
+                        {% endif %}
+                        {% if producto.destacado %}
+                            <span class="badge badge-warning">Destacado</span>
+                        {% endif %}
+                    </td>
+                    <td class="table-actions">
+                        <a href="{% url 'catalogo:editar_producto' producto.pk %}" class="btn btn-small btn-primary">✏️ Editar</a>
+                        <a href="{% url 'catalogo:eliminar_producto' producto.pk %}" class="btn btn-small btn-danger">🗑️ Eliminar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No hay productos registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

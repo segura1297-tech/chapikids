@@ -1,0 +1,61 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Carrito - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Tu Carrito 🛒</h1>
+
+{% if items %}
+    <div class="cart-container">
+        <div class="cart-items">
+            {% for item in items %}
+                <div class="cart-item">
+                    {% if item.producto.foto %}
+                        <img src="{{ item.producto.foto.url }}" alt="{{ item.producto.nombre }}" class="cart-item-img">
+                    {% else %}
+                        <div class="cart-item-img placeholder">🎊</div>
+                    {% endif %}
+                    <div class="cart-item-info">
+                        <h3>{{ item.producto.nombre }}</h3>
+                        <p class="cart-item-price">${{ item.producto.precio }} c/u</p>
+                    </div>
+                    <div class="cart-item-actions">
+                        <form action="{% url 'carrito:actualizar' item.producto.id %}" method="post" class="quantity-form">
+                            {% csrf_token %}
+                            <input type="number" name="cantidad" value="{{ item.cantidad }}" min="0" class="quantity-input">
+                            <button type="submit" class="btn btn-small">Actualizar</button>
+                        </form>
+                        <form action="{% url 'carrito:quitar' item.producto.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-small">Quitar</button>
+                        </form>
+                    </div>
+                    <div class="cart-item-subtotal">
+                        <p>${{ item.subtotal }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="cart-summary">
+            <h2>Resumen</h2>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount">${{ total }}</span>
+            </div>
+            <div class="cart-actions">
+                <a href="{% url 'pedidos:checkout' %}" class="btn btn-primary btn-large">Proceder al pedido</a>
+                <form action="{% url 'carrito:limpiar' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Vaciar carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="empty-cart">
+        <p>Tu carrito está vacío 🛒</p>
+        <a href="{% url 'catalogo:lista' %}" class="btn btn-primary">Ver piñatas</a>
+    </div>
+{% endif %}
+{% endblock %}

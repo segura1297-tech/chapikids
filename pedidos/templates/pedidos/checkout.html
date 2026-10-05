@@ -1,0 +1,54 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Finalizar Pedido - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Finalizar Pedido 📝</h1>
+
+{% if error %}
+    <div class="alert alert-error">{{ error }}</div>
+{% endif %}
+
+<div class="checkout-container">
+    <form method="post" class="checkout-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="cliente_nombre">Nombre completo *</label>
+            <input type="text" id="cliente_nombre" name="cliente_nombre" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="cliente_telefono">Teléfono *</label>
+            <input type="tel" id="cliente_telefono" name="cliente_telefono" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="cliente_email">Email (opcional)</label>
+            <input type="email" id="cliente_email" name="cliente_email" class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="fecha_evento">Fecha del evento *</label>
+            <input type="date" id="fecha_evento" name="fecha_evento" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="notas">Notas adicionales</label>
+            <textarea id="notas" name="notas" rows="3" class="form-input" placeholder="Detalles especiales, colores, temática..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-large btn-full">Confirmar pedido</button>
+    </form>
+
+    <div class="checkout-summary">
+        <h2>Tu pedido</h2>
+        <div class="summary-items">
+            {% for producto_id, item in carrito.items %}
+                <div class="summary-item">
+                    <span>{{ item.cantidad }}x {{ item.producto.nombre }}</span>
+                    <span>${{ item.subtotal }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="summary-total">
+            <span>Total:</span>
+            <span>${{ total }}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}¡Pedido Confirmado! - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-icon">🎉</div>
+    <h1>¡Pedido Recibido!</h1>
+    <p class="success-message">Tu pedido <strong>{{ pedido.folio }}</strong> ha sido registrado exitosamente.</p>
+    <p class="success-instructions">Para completar tu pedido, envíanos el mensaje por WhatsApp:</p>
+
+    <a href="{{ whatsapp_url }}" target="_blank" class="btn btn-whatsapp btn-large">
+        📱 Enviar pedido por WhatsApp
+    </a>
+
+    <div class="success-details">
+        <h2>Resumen del pedido</h2>
+        <p><strong>Folio:</strong> {{ pedido.folio }}</p>
+        <p><strong>Cliente:</strong> {{ pedido.cliente_nombre }}</p>
+        <p><strong>Fecha del evento:</strong> {{ pedido.fecha_evento }}</p>
+        <p><strong>Total:</strong> ${{ pedido.total }}</p>
+    </div>
+
+    <a href="{% url 'catalogo:lista' %}" class="btn btn-secondary">← Volver al catálogo</a>
+</div>
+{% endblock %}

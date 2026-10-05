@@ -1,0 +1,65 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Editar Quiénes Somos - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="page-title">ℹ️ Editar "Quiénes Somos"</h1>
+
+    <form method="post" enctype="multipart/form-data" class="product-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="titulo">Título principal *</label>
+            <input type="text" id="titulo" name="titulo" required class="form-input" value="{{ info.titulo|default:'' }}" placeholder="Ej: Quiénes Somos">
+        </div>
+
+        <div class="form-group">
+            <label for="subtitulo">Subtítulo</label>
+            <input type="text" id="subtitulo" name="subtitulo" class="form-input" value="{{ info.subtitulo|default:'' }}" placeholder="Ej: Haciendo magia en cada fiesta">
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción principal *</label>
+            <textarea id="descripcion" name="descripcion" rows="5" required class="form-input" placeholder="Cuenta quién eres, qué te apasiona...">{{ info.descripcion|default:'' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="mision">Misión</label>
+            <textarea id="mision" name="mision" rows="3" class="form-input" placeholder="¿Cuál es tu misión?">{{ info.mision|default:'' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="vision">Visión</label>
+            <textarea id="vision" name="vision" rows="3" class="form-input" placeholder="¿Hacia dónde vas?">{{ info.vision|default:'' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="historia">Historia</label>
+            <textarea id="historia" name="historia" rows="4" class="form-input" placeholder="¿Cómo empezó todo?">{{ info.historia|default:'' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Foto de equipo/negocio</label>
+            {% if info and info.foto %}
+                <div class="current-image">
+                    <img src="{{ info.foto.url }}" alt="Nosotros" class="preview-img">
+                </div>
+            {% endif %}
+            <input type="file" id="foto" name="foto" accept="image/*" class="form-input file-input">
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+                <input type="checkbox" name="activo" {% if info.activo %}checked{% endif %}>
+                <span>Mostrar en la página pública</span>
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">💾 Guardar Cambios</button>
+            <a href="{% url 'catalogo:gestion_productos' %}" class="btn btn-secondary">← Volver</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

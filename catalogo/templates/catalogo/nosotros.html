@@ -1,0 +1,62 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Quiénes Somos - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+{% if info %}
+    <section class="nosotros-hero">
+        <h1>{{ info.titulo }}</h1>
+        {% if info.subtitulo %}
+            <p class="nosotros-subtitulo">{{ info.subtitulo }}</p>
+        {% endif %}
+    </section>
+
+    {% if info.foto %}
+        <section class="nosotros-foto">
+            <img src="{{ info.foto.url }}" alt="{{ info.titulo }}" class="nosotros-img">
+        </section>
+    {% endif %}
+
+    <section class="nosotros-content">
+        <div class="nosotros-descripcion">
+            <h2>Nuestra Historia</h2>
+            <p>{{ info.descripcion|linebreaks }}</p>
+        </div>
+
+        {% if info.historia %}
+            <div class="nosotros-historia">
+                <h2>¿Cómo Empezamos?</h2>
+                <p>{{ info.historia|linebreaks }}</p>
+            </div>
+        {% endif %}
+
+        <div class="nosotros-grid">
+            {% if info.mision %}
+                <div class="nosotros-card">
+                    <h3>🎯 Misión</h3>
+                    <p>{{ info.mision|linebreaks }}</p>
+                </div>
+            {% endif %}
+
+            {% if info.vision %}
+                <div class="nosotros-card">
+                    <h3>👁️ Visión</h3>
+                    <p>{{ info.vision|linebreaks }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="nosotros-cta">
+        <h2>¿Listo para tu fiesta?</h2>
+        <p>Explora nuestro catálogo y encuentra la piñata perfecta</p>
+        <a href="{% url 'catalogo:lista' %}" class="btn btn-primary btn-large">Ver Catálogo 🎉</a>
+    </section>
+{% else %}
+    <section class="nosotros-empty">
+        <h1>Quiénes Somos</h1>
+        <p>Pronto contaremos nuestra historia... 🦄</p>
+        <a href="{% url 'catalogo:lista' %}" class="btn btn-primary">Ver Catálogo</a>
+    </section>
+{% endif %}
+{% endblock %}

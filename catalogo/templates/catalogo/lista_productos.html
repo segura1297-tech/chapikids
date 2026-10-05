@@ -1,0 +1,58 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Catálogo - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>¡Nuestras Piñatas!</h1>
+    <p>Encuentra la piñata perfecta para tu fiesta 🦄🎉</p>
+</section>
+
+<section class="filters">
+    <form method="get" class="search-form">
+        <input type="text" name="q" placeholder="Buscar piñatas..." value="{{ query }}" class="search-input">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <div class="category-filters">
+        <a href="{% url 'catalogo:lista' %}" class="category-btn {% if not categoria_actual %}active{% endif %}">
+            Todas
+        </a>
+        {% for categoria in categorias %}
+            <a href="?categoria={{ categoria.slug }}" class="category-btn {% if categoria_actual == categoria.slug %}active{% endif %}">
+                {{ categoria.nombre }}
+            </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="products-grid">
+    {% if productos %}
+        {% for producto in productos %}
+            <div class="product-card">
+                <a href="{% url 'catalogo:detalle' producto.slug %}" class="product-link">
+                    {% if producto.foto %}
+                        <img src="{{ producto.foto.url }}" alt="{{ producto.nombre }}" class="product-img">
+                    {% else %}
+                        <div class="product-img placeholder">🎊</div>
+                    {% endif %}
+                    <div class="product-info">
+                        <span class="product-category">{{ producto.categoria.nombre }}</span>
+                        <h3 class="product-name">{{ producto.nombre }}</h3>
+                        <p class="product-price">${{ producto.precio }}</p>
+                    </div>
+                </a>
+                <form action="{% url 'carrito:agregar' producto.id %}" method="post" class="add-to-cart">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-add">Agregar al carrito</button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <p>No se encontraron piñatas 😢</p>
+            <a href="{% url 'catalogo:lista' %}" class="btn btn-primary">Ver todas</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

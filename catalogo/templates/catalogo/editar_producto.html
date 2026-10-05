@@ -1,0 +1,76 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}Editar Producto - Chapikids Piñatas{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="page-title">✏️ Editar Producto</h1>
+
+    <form method="post" enctype="multipart/form-data" class="product-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="nombre">Nombre del producto *</label>
+            <input type="text" id="nombre" name="nombre" required class="form-input" value="{{ producto.nombre }}">
+        </div>
+
+        <div class="form-group">
+            <label for="categoria">Categoría *</label>
+            <select id="categoria" name="categoria" required class="form-input">
+                <option value="">Selecciona una categoría</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if producto.categoria.id == categoria.id %}selected{% endif %}>
+                        {{ categoria.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio (MXN) *</label>
+            <input type="number" id="precio" name="precio" required class="form-input" value="{{ producto.precio }}" step="0.01" min="0">
+        </div>
+
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" rows="4" class="form-input">{{ producto.descripcion }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Foto actual</label>
+            {% if producto.foto %}
+                <div class="current-image">
+                    <img src="{{ producto.foto.url }}" alt="{{ producto.nombre }}" class="preview-img">
+                </div>
+            {% else %}
+                <p class="form-help">No hay foto actual</p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="foto">Cambiar foto</label>
+            <input type="file" id="foto" name="foto" accept="image/*" class="form-input file-input">
+            <small class="form-help">Selecciona una nueva imagen para reemplazar la actual</small>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+                <input type="checkbox" name="disponible" {% if producto.disponible %}checked{% endif %}>
+                <span>Disponible para venta</span>
+            </label>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+                <input type="checkbox" name="destacado" {% if producto.destacado %}checked{% endif %}>
+                <span>Producto destacado</span>
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">💾 Guardar Cambios</button>
+            <a href="{% url 'catalogo:gestion_productos' %}" class="btn btn-secondary">← Volver</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

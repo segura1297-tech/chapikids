@@ -1,0 +1,218 @@
+{% extends 'catalogo/base.html' %}
+
+{% block title %}{{ producto.nombre }} - Chapikids Piñatas{% endblock %}
+
+{% block meta_description %}{{ producto.nombre }} - ${{ producto.precio }}. {{ producto.descripcion|truncatewords:20 }}{% endblock %}
+
+{% block og_title %}{{ producto.nombre }} - Chapikids Piñatas{% endblock %}
+
+{% block og_description %}{{ producto.nombre }} por ${{ producto.precio }}. ¡Compra en Chapikids!{% endblock %}
+
+{% block og_image %}{% if producto.foto %}{{ producto.foto.url }}{% endif %}{% endblock %}
+
+{% block extra_head %}
+<script>
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: "view_item",
+  ecommerce: {
+    currency: "MXN",
+    value: {{ producto.precio }},
+    items: [{
+      item_id: "{{ producto.id }}",
+      item_name: "{{ producto.nombre|escapejs }}",
+      item_category: "{{ producto.categoria.nombre|escapejs }}",
+      price: {{ producto.precio }}
+    }]
+  }
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="product-detail-gallery">
+        {% if producto.foto %}
+            <img src="{{ producto.foto.url }}" alt="{{ producto.nombre }}" class="main-image" id="mainImage">
+        {% else %}
+            <div class="main-image placeholder">🎊</div>
+        {% endif %}
+
+        {% with imagenes=producto.imagenes.all %}
+        {% if imagenes %}
+            <div class="thumbnail-gallery">
+                {% if producto.foto %}
+                    <img src="{{ producto.foto.url }}" alt="{{ producto.nombre }}" class="thumbnail active" onclick="changeImage('{{ producto.foto.url }}')">
+                {% endif %}
+                {% for img in imagenes %}
+                    {% if img.descripcion %}
+                        <img src="{{ img.imagen.url }}" alt="{{ img.descripcion }}" class="thumbnail" onclick="changeImage('{{ img.imagen.url }}')">
+                    {% else %}
+                        <img src="{{ img.imagen.url }}" alt="{{ producto.nombre }}" class="thumbnail" onclick="changeImage('{{ img.imagen.url }}')">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="product-detail-info">
+        <span class="product-category">{{ producto.categoria.nombre }}</span>
+        <h1>{{ producto.nombre }}</h1>
+        <p class="product-price-large">${{ producto.precio }}</p>
+
+        {% if producto.descripcion %}
+            <p class="product-description">{{ producto.descripcion }}</p>
+        {% endif %}
+
+        {% if producto.personalizable %}
+            <div class="personalizable-badge">
+                ✨ ¡Personalizable!
+            </div>
+        {% endif %}
+
+        <form action="{% url 'carrito:agregar' producto.id %}" method="post" class="add-to-cart-large">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-large">Agregar al carrito 🛒</button>
+        </form>
+        <a href="{% url 'catalogo:lista' %}" class="btn btn-secondary">← Volver al catálogo</a>
+    </div>
+</div>
+
+<!-- Pestañas de información -->
+<div class="tabs-container">
+    <div class="tabs-header">
+        <button class="tab-btn active" onclick="openTab(event, 'descripcion')">📝 Descripción</button>
+        <button class="tab-btn" onclick="openTab(event, 'caracteristicas')">📏 Características</button>
+        <button class="tab-btn" onclick="openTab(event, 'materiales')">🧵 Materiales</button>
+        {% if producto.personalizable %}
+            <button class="tab-btn" onclick="openTab(event, 'personalizacion')">✨ Personalización</button>
+        {% endif %}
+    </div>
+
+    <div id="descripcion" class="tab-content active">
+        <h3>Descripción del Producto</h3>
+        {% if producto.descripcion %}
+            <p>{{ producto.descripcion|linebreaks }}</p>
+        {% else %}
+            <p>Sin descripción disponible.</p>
+        {% endif %}
+
+        {% if producto.tiempo_elaboracion %}
+            <p><strong>⏱️ Tiempo de elaboración:</strong> {{ producto.tiempo_elaboracion }}</p>
+        {% endif %}
+    </div>
+
+    <div id="caracteristicas" class="tab-content">
+        <h3>Características Técnicas</h3>
+        <table class="specs-table">
+            {% if producto.alto %}
+                <tr>
+                    <td><strong>Alto</strong></td>
+                    <td>{{ producto.alto }} cm</td>
+                </tr>
+            {% endif %}
+            {% if producto.ancho %}
+                <tr>
+                    <td><strong>Ancho</strong></td>
+                    <td>{{ producto.ancho }} cm</td>
+                </tr>
+            {% endif %}
+            {% if producto.profundidad %}
+                <tr>
+                    <td><strong>Profundidad</strong></td>
+                    <td>{{ producto.profundidad }} cm</td>
+                </tr>
+            {% endif %}
+            {% if producto.peso %}
+                <tr>
+                    <td><strong>Peso</strong></td>
+                    <td>{{ producto.peso }} kg</td>
+                </tr>
+            {% endif %}
+            {% if producto.tiempo_elaboracion %}
+                <tr>
+                    <td><strong>Tiempo de elaboración</strong></td>
+                    <td>{{ producto.tiempo_elaboracion }}</td>
+                </tr>
+            {% endif %}
+        </table>
+
+        {% if producto.colores_disponibles %}
+            <div class="colores-disponibles">
+                <h4>🎨 Colores disponibles:</h4>
+                <div class="color-tags">
+                    {% for color in producto.get_colores_lista %}
+                        <span class="color-tag">{{ color }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="materiales" class="tab-content">
+        <h3>Materiales de Elaboración</h3>
+        {% if producto.materiales %}
+            <p>{{ producto.materiales|linebreaks }}</p>
+        {% else %}
+            <p>Información de materiales no disponible.</p>
+        {% endif %}
+    </div>
+
+    {% if producto.personalizable %}
+        <div id="personalizacion" class="tab-content">
+            <h3>Opciones de Personalización</h3>
+            {% if producto.opciones_personalizacion %}
+                <p>{{ producto.opciones_personalizacion|linebreaks }}</p>
+            {% else %}
+                <p>Pregunta por las opciones de personalización disponibles.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+{% if productos_relacionados %}
+<section class="related-products">
+    <h2>Productos relacionados</h2>
+    <div class="products-grid small">
+        {% for p in productos_relacionados %}
+            <div class="product-card">
+                <a href="{% url 'catalogo:detalle' p.slug %}" class="product-link">
+                    {% if p.foto %}
+                        <img src="{{ p.foto.url }}" alt="{{ p.nombre }}" class="product-img">
+                    {% else %}
+                        <div class="product-img placeholder">🎊</div>
+                    {% endif %}
+                    <div class="product-info">
+                        <h3 class="product-name">{{ p.nombre }}</h3>
+                        <p class="product-price">${{ p.precio }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<script>
+function changeImage(src) {
+    document.getElementById('mainImage').src = src;
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function openTab(evt, tabName) {
+    var i, tabcontent, tabbtns;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].classList.remove("active");
+    }
+    tabbtns = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tabbtns.length; i++) {
+        tabbtns[i].classList.remove("active");
+    }
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+</script>
+{% endblock %}

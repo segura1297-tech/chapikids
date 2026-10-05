@@ -1,0 +1,1524 @@
+/* ===== Chapikids Piñatas - Estilos ===== */
+:root {
+    --rosa: #FF69B4;
+    --rosa-claro: #FFB6C1;
+    --morado: #8B008B;
+    --morado-claro: #DA70D6;
+    --amarillo: #FFD700;
+    --blanco: #FFFFFF;
+    --gris-claro: #F8F9FA;
+    --gris-oscuro: #333333;
+    --sombra: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --sombra-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #fff0f5 0%, #f0f8ff 100%);
+    color: var(--gris-oscuro);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===== Header ===== */
+.header {
+    background: linear-gradient(135deg, var(--rosa) 0%, var(--morado) 100%);
+    padding: 15px 0;
+    box-shadow: var(--sombra);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--blanco);
+}
+
+.logo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--blanco);
+}
+
+.logo-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.cart-link {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.cart-badge {
+    background: var(--amarillo);
+    color: var(--gris-oscuro);
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* ===== Main ===== */
+.main {
+    flex: 1;
+    padding: 30px 0;
+}
+
+/* ===== Hero ===== */
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    color: var(--blanco);
+}
+
+.hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+/* ===== Filtros ===== */
+.filters {
+    margin-bottom: 30px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--rosa);
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-btn {
+    padding: 8px 20px;
+    background: var(--blanco);
+    border: 2px solid var(--rosa-claro);
+    border-radius: 25px;
+    text-decoration: none;
+    color: var(--gris-oscuro);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background: var(--rosa);
+    color: var(--blanco);
+    border-color: var(--rosa);
+    transform: translateY(-2px);
+}
+
+/* ===== Productos Grid ===== */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.products-grid.small {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.product-card {
+    background: var(--blanco);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
+}
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    font-size: 4rem;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-category {
+    display: inline-block;
+    background: var(--amarillo);
+    color: var(--gris-oscuro);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.product-name {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--gris-oscuro);
+}
+
+.product-price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--morado);
+}
+
+.add-to-cart {
+    padding: 0 15px 15px;
+}
+
+.btn-add {
+    width: 100%;
+}
+
+/* ===== Botones ===== */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--rosa) 0%, var(--morado) 100%);
+    color: var(--blanco);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-hover);
+}
+
+.btn-secondary {
+    background: var(--gris-claro);
+    color: var(--gris-oscuro);
+    border: 2px solid var(--rosa-claro);
+}
+
+.btn-secondary:hover {
+    background: var(--rosa-claro);
+}
+
+.btn-danger {
+    background: #ff4444;
+    color: var(--blanco);
+}
+
+.btn-whatsapp {
+    background: #25D366;
+    color: var(--blanco);
+    font-size: 1.2rem;
+    padding: 15px 30px;
+}
+
+.btn-whatsapp:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* ===== Detalle de Producto ===== */
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--sombra);
+    margin-bottom: 30px;
+}
+
+.product-detail-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.main-image.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    font-size: 6rem;
+    height: 400px;
+}
+
+.thumbnail-gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    border-color: var(--rosa);
+    transform: scale(1.05);
+}
+
+.product-detail-info h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.product-price-large {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--morado);
+    margin-bottom: 15px;
+}
+
+.product-description {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.add-to-cart-large {
+    margin-bottom: 15px;
+}
+
+.product-category {
+    display: inline-block;
+    background: var(--amarillo);
+    color: var(--gris-oscuro);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* ===== Carrito ===== */
+.page-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    text-align: center;
+    color: var(--morado);
+}
+
+.cart-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.cart-items {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--sombra);
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    gap: 15px;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cart-item-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    font-size: 2rem;
+}
+
+.cart-item-info h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    color: var(--morado);
+    font-weight: 600;
+}
+
+.cart-item-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quantity-form {
+    display: flex;
+    gap: 5px;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 6px;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.cart-item-subtotal {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--morado);
+}
+
+.cart-summary {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: var(--sombra);
+    height: fit-content;
+}
+
+.cart-summary h2 {
+    margin-bottom: 20px;
+    color: var(--morado);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 15px 0;
+    border-top: 2px solid var(--rosa-claro);
+    margin-bottom: 20px;
+}
+
+.total-amount {
+    color: var(--morado);
+}
+
+.cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--blanco);
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.empty-cart p {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+/* ===== Checkout ===== */
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.checkout-form {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: var(--sombra);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--gris-oscuro);
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--rosa-claro);
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: var(--rosa);
+}
+
+.checkout-summary {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: var(--sombra);
+    height: fit-content;
+}
+
+.checkout-summary h2 {
+    margin-bottom: 20px;
+    color: var(--morado);
+}
+
+.summary-items {
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-top: 15px;
+    border-top: 2px solid var(--rosa-claro);
+}
+
+/* ===== Pedido Exitoso ===== */
+.success-container {
+    text-align: center;
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 50px 30px;
+    box-shadow: var(--sombra);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.success-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.success-container h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    color: var(--morado);
+    margin-bottom: 15px;
+}
+
+.success-message {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.success-instructions {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+.success-details {
+    background: var(--gris-claro);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 25px 0;
+    text-align: left;
+}
+
+.success-details h2 {
+    margin-bottom: 15px;
+    color: var(--morado);
+}
+
+.success-details p {
+    margin-bottom: 8px;
+}
+
+/* ===== Alertas ===== */
+.alert {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    background: #ffebee;
+    color: #c62828;
+    border: 2px solid #ef5350;
+}
+
+/* ===== No Results ===== */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--blanco);
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+    grid-column: 1 / -1;
+}
+
+.no-results p {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+/* ===== Footer ===== */
+.footer {
+    background: linear-gradient(135deg, var(--morado) 0%, var(--rosa) 100%);
+    color: var(--blanco);
+    padding: 40px 0 20px;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-logo-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--blanco);
+}
+
+.footer-info h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.footer-info p {
+    margin-bottom: 5px;
+}
+
+.footer-info a {
+    color: var(--amarillo);
+    text-decoration: none;
+}
+
+.footer-info a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0.8;
+}
+
+/* ===== Login ===== */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 20px;
+}
+
+.login-box {
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--sombra-hover);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.login-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--morado);
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.login-form {
+    text-align: left;
+}
+
+.login-form .form-group {
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--gris-oscuro);
+}
+
+.login-help {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.login-help p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ===== Galería de Imágenes ===== */
+.product-detail-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.main-image.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    font-size: 6rem;
+}
+
+.thumbnail-gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    border-color: var(--rosa);
+    transform: scale(1.05);
+}
+
+/* ===== Pestañas (Tabs) ===== */
+.tabs-container {
+    background: var(--blanco);
+    border-radius: 15px;
+    margin-top: 30px;
+    box-shadow: var(--sombra);
+    overflow: hidden;
+}
+
+.tabs-header {
+    display: flex;
+    background: var(--rosa-claro);
+    overflow-x: auto;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    background: transparent;
+    color: var(--gris-oscuro);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.tab-btn.active {
+    background: var(--blanco);
+    color: var(--morado);
+    border-bottom: 3px solid var(--rosa);
+}
+
+.tab-content {
+    display: none;
+    padding: 25px;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.tab-content h3 {
+    color: var(--morado);
+    margin-bottom: 15px;
+    font-family: 'Fredoka One', cursive;
+}
+
+.tab-content h4 {
+    color: var(--morado);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* ===== Tabla de Especificaciones ===== */
+.specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.specs-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.specs-table td:first-child {
+    font-weight: 600;
+    color: var(--morado);
+    width: 40%;
+}
+
+/* ===== Colores Disponibles ===== */
+.colores-disponibles {
+    margin-top: 20px;
+}
+
+.color-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.color-tag {
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    color: var(--blanco);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* ===== Badge de Personalizable ===== */
+.personalizable-badge {
+    background: linear-gradient(135deg, var(--amarillo) 0%, #FFA500 100%);
+    color: var(--gris-oscuro);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    margin: 15px 0;
+    display: inline-block;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .product-detail {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .main-image {
+        height: 300px;
+    }
+
+    .main-image.placeholder {
+        height: 300px;
+        font-size: 4rem;
+    }
+
+    .thumbnail {
+        width: 60px;
+        height: 60px;
+    }
+
+    .product-detail-info h1 {
+        font-size: 1.5rem;
+    }
+
+    .product-price-large {
+        font-size: 1.5rem;
+    }
+
+    .tabs-header {
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        flex: 1 1 auto;
+        min-width: 80px;
+    }
+
+    .tab-content {
+        padding: 15px;
+    }
+
+    .specs-table td {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    .color-tags {
+        gap: 8px;
+    }
+
+    .color-tag {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+        grid-template-columns: 60px 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .cart-item-actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .cart-item-subtotal {
+        grid-column: 1 / -1;
+        text-align: right;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .category-filters {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 1.2rem;
+    }
+
+    .hero {
+        padding: 30px 15px;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-detail {
+        padding: 20px;
+    }
+
+    .success-container {
+        padding: 30px 20px;
+    }
+}
+
+/* ===== Gestión de Productos ===== */
+.gestion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.gestion-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.gestion-table-container {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: var(--sombra);
+    overflow-x: auto;
+}
+
+.gestion-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.gestion-table th,
+.gestion-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.gestion-table th {
+    background: var(--rosa-claro);
+    color: var(--morado);
+    font-weight: 700;
+}
+
+.gestion-table tr:hover {
+    background: #fff0f5;
+}
+
+.table-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.table-img.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    font-size: 1.5rem;
+}
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.badge-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.badge-warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* ===== Formularios de Gestión ===== */
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: var(--sombra);
+}
+
+.product-form .form-group {
+    margin-bottom: 20px;
+}
+
+.product-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--gris-oscuro);
+}
+
+.form-help {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.file-input {
+    padding: 10px;
+    border: 2px dashed var(--rosa-claro);
+    border-radius: 10px;
+    background: var(--gris-claro);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.current-image {
+    margin-bottom: 15px;
+}
+
+.preview-img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+/* ===== Confirmación ===== */
+.confirm-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: var(--sombra);
+    text-align: center;
+}
+
+.confirm-message {
+    margin-top: 20px;
+}
+
+.product-summary,
+.category-summary {
+    background: var(--gris-claro);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+
+.summary-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.summary-info h3 {
+    margin-bottom: 5px;
+    color: var(--morado);
+}
+
+.warning-text {
+    color: #c62828;
+    font-weight: 600;
+    margin: 15px 0;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+/* ===== Página Quiénes Somos ===== */
+.nosotros-hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--rosa-claro) 0%, var(--morado-claro) 100%);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    color: var(--blanco);
+}
+
+.nosotros-hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nosotros-subtitulo {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+.nosotros-foto {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.nosotros-img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 20px;
+    box-shadow: var(--sombra-hover);
+}
+
+.nosotros-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.nosotros-descripcion,
+.nosotros-historia {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--sombra);
+}
+
+.nosotros-descripcion h2,
+.nosotros-historia h2 {
+    color: var(--morado);
+    margin-bottom: 15px;
+    font-family: 'Fredoka One', cursive;
+}
+
+.nosotros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.nosotros-card {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: var(--sombra);
+    text-align: center;
+}
+
+.nosotros-card h3 {
+    color: var(--morado);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.nosotros-cta {
+    text-align: center;
+    background: linear-gradient(135deg, var(--rosa) 0%, var(--morado) 100%);
+    border-radius: 20px;
+    padding: 40px 20px;
+    color: var(--blanco);
+    margin-top: 30px;
+}
+
+.nosotros-cta h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.nosotros-cta p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    opacity: 0.95;
+}
+
+.nosotros-empty {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--blanco);
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+}
+
+.nosotros-empty h1 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--morado);
+    margin-bottom: 15px;
+}
+
+.nosotros-empty p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+/* ===== Mensajes ===== */
+.messages {
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 2px solid #bee5eb;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 2px solid #ffeeba;
+}
+
+/* ===== Responsive Gestión ===== */
+@media (max-width: 768px) {
+    .gestion-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .gestion-actions {
+        justify-content: center;
+    }
+
+    .gestion-table th,
+    .gestion-table td {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    .table-actions {
+        flex-direction: column;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .nosotros-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .nosotros-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .gestion-table {
+        font-size: 0.85rem;
+    }
+
+    .table-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn-small {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+
+    .nosotros-hero {
+        padding: 30px 15px;
+    }
+
+    .nosotros-hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .nosotros-cta h2 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Chapikids Piñatas{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Las mejores piñatas para tu fiesta. Superhéroes, princesas, videojuegos y más{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Chapikids Piñatas{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Las mejores piñatas para tu fiesta{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% block og_image %}{% static 'img/logo.jpeg' %}{% endblock %}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="{% url 'catalogo:lista' %}" class="logo">
+                    <img src="{% static 'img/logo.jpeg' %}" alt="Chapikids Piñatas" class="logo-img">
+                    <span class="logo-text">Chapikids Piñatas</span>
+                </a>
+                <nav class="nav">
+                    <a href="{% url 'catalogo:lista' %}" class="nav-link">Catálogo</a>
+                    <a href="{% url 'catalogo:nosotros' %}" class="nav-link">Quiénes Somos</a>
+                    <a href="{% url 'carrito:ver' %}" class="nav-link cart-link">
+                        🛒 Carrito
+                        {% if cantidad_carrito > 0 %}
+                            <span class="cart-badge">{{ cantidad_carrito }}</span>
+                        {% endif %}
+                    </a>
+                    {% if user.is_staff %}
+                        <a href="/admin/" class="nav-link">📦 Admin</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{% static 'img/logo.jpeg' %}" alt="Chapikids Piñatas" class="footer-logo-img">
+                </div>
+                <div class="footer-info">
+                    <h3>Chapikids Piñatas</h3>
+                    <p>¡Las mejores piñatas para tu fiesta! 🎉</p>
+                    <p>📱 WhatsApp: <a href="https://wa.me/5218282895407" target="_blank">828 289 5407</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Chapikids Piñatas. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/carrito.js' %}"></script>
+</body>
+</html>
