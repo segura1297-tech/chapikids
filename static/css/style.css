@@ -165,10 +165,27 @@ body {
 }
 
 .category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 15px;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 15px;
     margin-top: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-grid::-webkit-scrollbar-thumb {
+    background: var(--rosa-claro);
+    border-radius: 4px;
+}
+
+.category-card {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
 }
 
 .category-card {
