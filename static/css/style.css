@@ -785,7 +785,6 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
-    mix-blend-mode: multiply;
     border-radius: 50%;
     border: 3px solid var(--blanco);
 }
