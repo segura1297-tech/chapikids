@@ -33,7 +33,7 @@ class ProductoAdmin(admin.ModelAdmin):
             'fields': ('disponible', 'destacado')
         }),
         ('Características Técnicas', {
-            'fields': (('alto', 'ancho', 'profundidad'), 'peso', 'materiales', 'tiempo_elaboracion'),
+            'fields': (('alto', 'ancho', 'profundidad'), 'peso', 'materiales', 'tiempo_elaboracion', 'tiempo_entrega'),
             'classes': ('collapse',)
         }),
         ('Colores y Personalización', {

@@ -2,11 +2,11 @@
 
 {% block title %}{{ producto.nombre }} - Chapikids Piñatas{% endblock %}
 
-{% block meta_description %}{{ producto.nombre }} - ${{ producto.precio }}. {{ producto.descripcion|truncatewords:20 }}{% endblock %}
+{% block meta_description %}{{ producto.nombre }} - Cotización por WhatsApp. {{ producto.descripcion|truncatewords:20 }}{% endblock %}
 
 {% block og_title %}{{ producto.nombre }} - Chapikids Piñatas{% endblock %}
 
-{% block og_description %}{{ producto.nombre }} por ${{ producto.precio }}. ¡Compra en Chapikids!{% endblock %}
+{% block og_description %}{{ producto.nombre }} - Cotización por WhatsApp. ¡Pide en Chapikids!{% endblock %}
 
 {% block og_image %}{% if producto.foto %}{{ producto.foto.url }}{% endif %}{% endblock %}
 
@@ -16,13 +16,10 @@ window.dataLayer = window.dataLayer || [];
 window.dataLayer.push({
   event: "view_item",
   ecommerce: {
-    currency: "MXN",
-    value: {{ producto.precio }},
     items: [{
       item_id: "{{ producto.id }}",
       item_name: "{{ producto.nombre|escapejs }}",
-      item_category: "{{ producto.categoria.nombre|escapejs }}",
-      price: {{ producto.precio }}
+      item_category: "{{ producto.categoria.nombre|escapejs }}"
     }]
   }
 });
@@ -59,7 +56,11 @@ window.dataLayer.push({
     <div class="product-detail-info">
         <span class="product-category">{{ producto.categoria.nombre }}</span>
         <h1>{{ producto.nombre }}</h1>
-        <p class="product-price-large">${{ producto.precio }}</p>
+        <p class="product-price-large">Cotización por WhatsApp 📱</p>
+
+        {% if producto.tiempo_entrega %}
+            <p class="product-delivery"><strong>⏱️ Tiempo de entrega estimado:</strong> {{ producto.tiempo_entrega }}</p>
+        {% endif %}
 
         {% if producto.descripcion %}
             <p class="product-description">{{ producto.descripcion }}</p>
@@ -98,8 +99,12 @@ window.dataLayer.push({
             <p>Sin descripción disponible.</p>
         {% endif %}
 
+        {% if producto.tiempo_entrega %}
+            <p><strong>⏱️ Tiempo de entrega estimado:</strong> {{ producto.tiempo_entrega }}</p>
+        {% endif %}
+
         {% if producto.tiempo_elaboracion %}
-            <p><strong>⏱️ Tiempo de elaboración:</strong> {{ producto.tiempo_elaboracion }}</p>
+            <p><strong>🛠️ Tiempo de elaboración:</strong> {{ producto.tiempo_elaboracion }}</p>
         {% endif %}
     </div>
 
@@ -185,7 +190,7 @@ window.dataLayer.push({
                     {% endif %}
                     <div class="product-info">
                         <h3 class="product-name">{{ p.nombre }}</h3>
-                        <p class="product-price">${{ p.precio }}</p>
+                        <p class="product-price">Cotización por WhatsApp 📱</p>
                     </div>
                 </a>
             </div>

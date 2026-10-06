@@ -21,6 +21,9 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
 
+# Orígenes confiables para CSRF (tu dominio de Railway)
+CSRF_TRUSTED_ORIGINS = [o for o in config('CSRF_TRUSTED_ORIGINS', default='').split(',') if o]
+
 
 # Application definition
 
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,6 +85,11 @@ DATABASES = {
     }
 }
 
+# Base de datos PostgreSQL de Railway (si DATABASE_URL existe)
+import dj_database_url
+if config('DATABASE_URL', default=''):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -120,10 +129,36 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+# Collectstatic de producción
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STORAGES = {
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},
+}
 
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# --- Cloudflare R2 (media) ---
+R2_ACCESS_KEY_ID = config('R2_ACCESS_KEY_ID', default='')
+R2_SECRET_ACCESS_KEY = config('R2_SECRET_ACCESS_KEY', default='')
+R2_BUCKET = config('R2_BUCKET', default='')
+R2_ENDPOINT = config('R2_ENDPOINT', default='')  # https://<account>.r2.cloudflarestorage.com
+R2_PUBLIC_URL = config('R2_PUBLIC_URL', default='')  # https://pub-xxxx.r2.dev o tu dominio
+
+if R2_BUCKET and R2_ENDPOINT and R2_ACCESS_KEY_ID:
+    AWS_ACCESS_KEY_ID = R2_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = R2_SECRET_ACCESS_KEY
+    AWS_STORAGE_BUCKET_NAME = R2_BUCKET
+    AWS_S3_ENDPOINT_URL = R2_ENDPOINT
+    AWS_S3_REGION_NAME = 'auto'
+    AWS_S3_CUSTOM_DOMAIN = R2_PUBLIC_URL.replace('https://', '') if R2_PUBLIC_URL else None
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+    AWS_QUERYSTRING_AUTH = False
+    MEDIA_URL = f'{R2_PUBLIC_URL}/' if R2_PUBLIC_URL else MEDIA_URL
+    STORAGES['default'] = {'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

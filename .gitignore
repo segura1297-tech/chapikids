@@ -2,6 +2,13 @@
 db.sqlite3
 db.sqlite3-journal
 
+# Variables de entorno (contienen claves)
+.env
+
+# Staticfiles de producción (se genera en el build)
+staticfiles/
+.opencode/
+
 # Media (imágenes subidas)
 media/
 

@@ -53,6 +53,7 @@ class Producto(models.Model):
     peso = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, help_text='Peso en kg')
     materiales = models.TextField(blank=True, help_text='Materiales de elaboración')
     tiempo_elaboracion = models.CharField(max_length=100, blank=True, help_text='Ej: 3-5 días hábiles')
+    tiempo_entrega = models.CharField(max_length=100, blank=True, help_text='Ej: 3-5 días hábiles')
     colores_disponibles = models.CharField(max_length=300, blank=True, help_text='Colores separados por comas')
 
     # Personalización

@@ -21,9 +21,14 @@ def checkout(request):
         notas = request.POST.get('notas', '').strip()
 
         if not cliente_nombre or not cliente_telefono or not fecha_evento:
+            from catalogo.models import Producto
+            items = []
+            for producto_id, item in carrito.items():
+                producto = Producto.objects.get(pk=producto_id)
+                items.append({'producto': producto, 'cantidad': item['cantidad']})
             return render(request, 'pedidos/checkout.html', {
                 'error': 'Por favor completa todos los campos obligatorios.',
-                'carrito': carrito,
+                'items': items,
             })
 
         # Calcular total
@@ -61,29 +66,36 @@ def checkout(request):
             )
 
         # Generar mensaje de WhatsApp
-        mensaje = f"""¡Hola! Quiero hacer un pedido en Chapikids Piñatas 🎉
+        from datetime import datetime
+        fecha_evento_fmt = fecha_evento
+        try:
+            fecha_evento_fmt = datetime.strptime(fecha_evento, '%Y-%m-%d').strftime('%d-%m-%Y')
+        except ValueError:
+            pass
 
-*Pedido:* {pedido.folio}
-*Fecha del evento:* {fecha_evento}
-
-*Productos:*
-"""
+        mensaje = "Hola 👋, buenas tardes:\n\n"
         for item in items_data:
-            mensaje += f"• {item['cantidad']}x {item['producto'].nombre} - ${item['subtotal']:.2f}\n"
+            mensaje += f"🎉 Quisiera la cotización de la piñata modelo: *{item['producto'].nombre}* (cantidad: {item['cantidad']})\n"
+            mensaje += f"📅 El evento lo tengo programado para: {fecha_evento_fmt}\n"
+            if item['producto'].tiempo_entrega:
+                mensaje += f"⏱️ Tiempo de entrega estimado: {item['producto'].tiempo_entrega}\n"
+            mensaje += "\n"
 
-        mensaje += f"""
-*Total:* ${total:.2f}
-
-*Datos del cliente:*
-Nombre: {cliente_nombre}
-Teléfono: {cliente_telefono}
-"""
+        mensaje += f"👤 Cliente: {cliente_nombre}\n"
+        mensaje += f"📱 Teléfono: {cliente_telefono}\n"
         if cliente_email:
-            mensaje += f"Email: {cliente_email}\n"
+            mensaje += f"📧 Email: {cliente_email}\n"
         if notas:
-            mensaje += f"\n*Notas:* {notas}\n"
+            mensaje += f"📝 Notas: {notas}\n"
+        mensaje += f"\nGracias 🙏"
 
-        mensaje += "\n¡Gracias por su preferencia! 🦄"
+        # Incluir URLs de las imágenes del producto
+        for item in items_data:
+            if item['producto'].foto:
+                url_imagen = request.build_absolute_uri(item['producto'].foto.url)
+                mensaje += f"\n\n📷 Imagen {item['producto'].nombre}: {url_imagen}"
+
+        mensaje += "\n\n¡Gracias por su preferencia! 🦄"
 
         # Generar enlace de WhatsApp
         whatsapp_number = settings.WHATSAPP_NUMBER
@@ -99,6 +111,13 @@ Teléfono: {cliente_telefono}
             'whatsapp_url': whatsapp_url,
         })
 
+    # Construir items para mostrar
+    from catalogo.models import Producto
+    items = []
+    for producto_id, item in carrito.items():
+        producto = Producto.objects.get(pk=producto_id)
+        items.append({'producto': producto, 'cantidad': item['cantidad']})
+
     return render(request, 'pedidos/checkout.html', {
-        'carrito': carrito,
+        'items': items,
     })

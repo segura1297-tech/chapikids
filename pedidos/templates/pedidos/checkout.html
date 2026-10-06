@@ -38,17 +38,13 @@
     <div class="checkout-summary">
         <h2>Tu pedido</h2>
         <div class="summary-items">
-            {% for producto_id, item in carrito.items %}
+            {% for item in items %}
                 <div class="summary-item">
                     <span>{{ item.cantidad }}x {{ item.producto.nombre }}</span>
-                    <span>${{ item.subtotal }}</span>
                 </div>
             {% endfor %}
         </div>
-        <div class="summary-total">
-            <span>Total:</span>
-            <span>${{ total }}</span>
-        </div>
+        <p class="summary-info">El precio final se cotiza por WhatsApp 📱</p>
     </div>
 </div>
 {% endblock %}

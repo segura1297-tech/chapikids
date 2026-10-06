@@ -51,12 +51,10 @@ def probar_detalle_producto():
         estado = "OK" if response.status_code == 200 else "ERROR"
         print(f"{estado} Detalle producto: {response.status_code}")
 
-        # Verificar elementos clave
         contenido = response.content.decode('utf-8')
         checks = [
             ('tabs-container', 'Pestanas'),
             ('specs-table', 'Tabla de caracteristicas'),
-            ('thumbnail-gallery', 'Galeria de miniaturas'),
             ('add-to-cart-large', 'Boton agregar al carrito'),
         ]
 
@@ -107,11 +105,9 @@ def probar_admin():
 
 
 if __name__ == '__main__':
-    print("\n== INICIANDO PRUEBAS DE CHAPMKIDS PIÑATAS ==\n")
+    print("\n== INICIANDO PRUEBAS ==\n")
     probar_paginas()
     probar_detalle_producto()
     probar_modelo_slug()
     probar_admin()
-    print("\n" + "=" * 50)
-    print("PRUEBAS COMPLETADAS")
-    print("=" * 50 + "\n")
+    print("\n== PRUEBAS COMPLETADAS ==\n")

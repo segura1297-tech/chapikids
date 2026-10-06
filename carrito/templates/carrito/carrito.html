@@ -17,7 +17,7 @@
                     {% endif %}
                     <div class="cart-item-info">
                         <h3>{{ item.producto.nombre }}</h3>
-                        <p class="cart-item-price">${{ item.producto.precio }} c/u</p>
+                        <p class="cart-item-price">Cotización por WhatsApp 📱</p>
                     </div>
                     <div class="cart-item-actions">
                         <form action="{% url 'carrito:actualizar' item.producto.id %}" method="post" class="quantity-form">
@@ -31,7 +31,7 @@
                         </form>
                     </div>
                     <div class="cart-item-subtotal">
-                        <p>${{ item.subtotal }}</p>
+                        <p>{{ item.cantidad }}x</p>
                     </div>
                 </div>
             {% endfor %}
@@ -39,10 +39,7 @@
 
         <div class="cart-summary">
             <h2>Resumen</h2>
-            <div class="cart-total">
-                <span>Total:</span>
-                <span class="total-amount">${{ total }}</span>
-            </div>
+            <p class="cart-info">El precio final se cotiza directamente por WhatsApp 📱</p>
             <div class="cart-actions">
                 <a href="{% url 'pedidos:checkout' %}" class="btn btn-primary btn-large">Proceder al pedido</a>
                 <form action="{% url 'carrito:limpiar' %}" method="post">
