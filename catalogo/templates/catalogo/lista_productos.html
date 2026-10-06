@@ -31,6 +31,29 @@
     </div>
 </section>
 
+{% if destacados %}
+<section class="destacados">
+    <h2>🏆 Productos Destacados</h2>
+    <div class="products-grid small">
+        {% for producto in destacados %}
+            <div class="product-card">
+                <a href="{% url 'catalogo:detalle' producto.slug %}" class="product-link">
+                    {% if producto.foto %}
+                        <img src="{{ producto.foto.url }}" alt="{{ producto.nombre }}" class="product-img">
+                    {% else %}
+                        <div class="product-img placeholder">🎊</div>
+                    {% endif %}
+                    <div class="product-info">
+                        <h3 class="product-name">{{ producto.nombre }}</h3>
+                        <p class="product-price">Cotización por WhatsApp 📱</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
 <section class="products-grid">
     {% if productos %}
         {% for producto in productos %}

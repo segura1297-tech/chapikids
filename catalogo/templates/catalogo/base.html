@@ -22,7 +22,7 @@
                     <img src="{% static 'img/logo.png' %}" alt="Chapikids Piñatas" class="logo-img">
                     <span class="logo-text">Chapikids Piñatas</span>
                 </a>
-                <nav class="nav">
+                <nav class="nav" id="navMenu">
                     <a href="{% url 'catalogo:lista' %}" class="nav-link">Catálogo</a>
                     <a href="{% url 'catalogo:nosotros' %}" class="nav-link">Quiénes Somos</a>
                     <a href="{% url 'carrito:ver' %}" class="nav-link cart-link">
@@ -35,6 +35,7 @@
                         <a href="/admin/" class="nav-link">📦 Admin</a>
                     {% endif %}
                 </nav>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Menú">☰</button>
             </div>
         </div>
     </header>
@@ -65,7 +66,14 @@
                     <h3>Chapikids Piñatas</h3>
                     <p>¡Las mejores piñatas para tu fiesta! 🎉</p>
                     <p>📱 WhatsApp: <a href="https://wa.me/5218282895407" target="_blank">828 289 5407</a></p>
+                    <p>📘 Facebook: <a href="https://www.facebook.com/profile.php?id=61561049997370" target="_blank">Ver página en Facebook</a></p>
                 </div>
+            </div>
+            <div class="footer-faq">
+                <h3>Preguntas Frecuentes</h3>
+                <details><summary>¿Hacen piñatas personalizadas?</summary>Sí, puedes solicitar colores, medidas y diseños especiales desde el catálogo.</details>
+                <details><summary>¿Cuál es el tiempo de entrega?</summary>Depende del modelo, pero en promedio de 3 a 7 días hábiles.</details>
+                <details><summary>¿Puedo cotizar por WhatsApp?</summary>¡Claro! Usa el botón flotante de WhatsApp en cualquier página.</details>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Chapikids Piñatas. Todos los derechos reservados.</p>
@@ -73,6 +81,15 @@
         </div>
     </footer>
 
+    <a href="https://wa.me/5218282895407" class="whatsapp-float" aria-label="WhatsApp" title="Cotizar por WhatsApp">💬</a>
+
     <script src="{% static 'js/carrito.js' %}"></script>
+    <script>
+        const btn = document.getElementById('hamburgerBtn');
+        const nav = document.getElementById('navMenu');
+        if (btn && nav) {
+            btn.addEventListener('click', () => nav.classList.toggle('open'));
+        }
+    </script>
 </body>
 </html>

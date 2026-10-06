@@ -29,6 +29,7 @@ def lista_productos(request):
         'categorias': categorias,
         'categoria_actual': categoria_slug,
         'query': query,
+        'destacados': Producto.objects.filter(disponible=True, destacado=True)[:8],
     }
     return render(request, 'catalogo/lista_productos.html', context)
 
