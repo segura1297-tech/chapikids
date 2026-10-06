@@ -67,6 +67,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border: 3px solid var(--blanco);
 }
 
@@ -248,6 +250,9 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
 }
 
 .product-img.placeholder {
@@ -382,6 +387,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 15px;
     box-shadow: var(--sombra);
 }
@@ -407,6 +414,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 8px;
     cursor: pointer;
     border: 3px solid transparent;
@@ -493,6 +502,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 10px;
 }
 
@@ -758,6 +769,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border: 3px solid var(--blanco);
 }
 
@@ -857,6 +870,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 15px;
     box-shadow: var(--sombra);
 }
@@ -881,6 +896,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 8px;
     cursor: pointer;
     border: 3px solid transparent;
@@ -1196,6 +1213,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 8px;
 }
 
@@ -1342,6 +1361,8 @@ body {
     object-fit: contain;
     background: transparent;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    mix-blend-mode: multiply;
+    border-radius: 50%;
     border-radius: 8px;
 }
 
