@@ -65,7 +65,8 @@ body {
     height: 50px;
     border-radius: 50%;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border: 3px solid var(--blanco);
 }
 
@@ -245,7 +246,8 @@ body {
     width: 100%;
     height: 200px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
 }
 
 .product-img.placeholder {
@@ -378,7 +380,8 @@ body {
     width: 100%;
     height: 400px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 15px;
     box-shadow: var(--sombra);
 }
@@ -402,7 +405,8 @@ body {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 8px;
     cursor: pointer;
     border: 3px solid transparent;
@@ -487,7 +491,8 @@ body {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 10px;
 }
 
@@ -751,7 +756,8 @@ body {
     height: 80px;
     border-radius: 50%;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border: 3px solid var(--blanco);
 }
 
@@ -849,7 +855,8 @@ body {
     width: 100%;
     height: 400px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 15px;
     box-shadow: var(--sombra);
 }
@@ -872,7 +879,8 @@ body {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 8px;
     cursor: pointer;
     border: 3px solid transparent;
@@ -1186,7 +1194,8 @@ body {
     width: 60px;
     height: 60px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 8px;
 }
 
@@ -1331,7 +1340,8 @@ body {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    background: var(--blanco);
+    background: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     border-radius: 8px;
 }
 
