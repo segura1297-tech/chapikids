@@ -18,7 +18,6 @@
     <div class="category-grid">
         <a href="{% url 'catalogo:lista' %}" class="category-card {% if not categoria_actual %}active{% endif %}">
             <img src="{% static 'img/TODAS.png' %}" alt="Todas" class="category-card-icon">
-            <span class="category-card-name">Todas</span>
         </a>
         {% for categoria in categorias %}
             <a href="?categoria={{ categoria.slug }}" class="category-card {% if categoria_actual == categoria.slug %}active{% endif %}">
@@ -27,7 +26,6 @@
                 {% else %}
                     <div class="category-card-icon placeholder">🎊</div>
                 {% endif %}
-                <span class="category-card-name">{{ categoria.nombre }}</span>
             </a>
         {% endfor %}
     </div>
