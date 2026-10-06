@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import Categoria, Producto, ProductoImagen, Nosotros
 
 
@@ -10,10 +11,17 @@ class ProductoImagenInline(admin.TabularInline):
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'slug', 'activa', 'orden']
+    list_display = ['nombre', 'slug', 'activa', 'orden', 'icono_preview']
     list_editable = ['activa', 'orden']
-    readonly_fields = ['slug']
+    readonly_fields = ['slug', 'icono_preview']
     search_fields = ['nombre']
+    fields = ['nombre', 'slug', 'descripcion', 'icono', 'icono_preview', 'activa', 'orden']
+
+    def icono_preview(self, obj):
+        if obj.icono:
+            return format_html('<img src="{}" style="height:40px;" />', obj.icono.url)
+        return '-'
+    icono_preview.short_description = 'Icono'
 
 
 @admin.register(Producto)

@@ -8,6 +8,7 @@ class Categoria(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     descripcion = models.TextField(blank=True)
+    icono = models.ImageField(upload_to='categorias/', blank=True, null=True, help_text='Imagen PNG sin fondo (máx. 100x100 sugerido)')
     activa = models.BooleanField(default=True)
     orden = models.PositiveIntegerField(default=0)
 

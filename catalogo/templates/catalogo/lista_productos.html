@@ -14,13 +14,19 @@
         <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
 
-    <div class="category-filters">
-        <a href="{% url 'catalogo:lista' %}" class="category-btn {% if not categoria_actual %}active{% endif %}">
-            Todas
+    <div class="category-grid">
+        <a href="{% url 'catalogo:lista' %}" class="category-card {% if not categoria_actual %}active{% endif %}">
+            <div class="category-card-icon">📂</div>
+            <span class="category-card-name">Todas</span>
         </a>
         {% for categoria in categorias %}
-            <a href="?categoria={{ categoria.slug }}" class="category-btn {% if categoria_actual == categoria.slug %}active{% endif %}">
-                {{ categoria.nombre }}
+            <a href="?categoria={{ categoria.slug }}" class="category-card {% if categoria_actual == categoria.slug %}active{% endif %}">
+                {% if categoria.icono %}
+                    <img src="{{ categoria.icono.url }}" alt="{{ categoria.nombre }}" class="category-card-icon">
+                {% else %}
+                    <div class="category-card-icon placeholder">🎊</div>
+                {% endif %}
+                <span class="category-card-name">{{ categoria.nombre }}</span>
             </a>
         {% endfor %}
     </div>
