@@ -171,6 +171,8 @@ WHATSAPP_NUMBER = config('WHATSAPP_NUMBER', default='5218282895407')
 # Security settings for production
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
+    # Railway proxy termina SSL y reenvía por HTTP con el header X-Forwarded-Proto
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
