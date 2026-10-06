@@ -191,8 +191,8 @@ body {
 }
 
 .category-card-icon {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     object-fit: contain;
     background: none;
     border-radius: 50%;
