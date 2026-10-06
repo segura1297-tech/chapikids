@@ -15,7 +15,7 @@
         <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
 
-    <div class="category-grid">
+    <div class="category-grid" id="categoryGrid">
         <a href="{% url 'catalogo:lista' %}" class="category-card {% if not categoria_actual %}active{% endif %}">
             <img src="{% static 'img/TODAS.png' %}" alt="Todas" class="category-card-icon">
         </a>
@@ -29,7 +29,40 @@
             </a>
         {% endfor %}
     </div>
+    <div class="category-dots" id="categoryDots"></div>
 </section>
+
+<script>
+    (function() {
+        const grid = document.getElementById('categoryGrid');
+        const dots = document.getElementById('categoryDots');
+        if (!grid || !dots) return;
+        const cards = grid.querySelectorAll('.category-card');
+        cards.forEach((card, i) => {
+            const dot = document.createElement('span');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                updateDots(i);
+            });
+            dots.appendChild(dot);
+        });
+        function updateDots(active) {
+            const all = dots.querySelectorAll('.dot');
+            all.forEach(d => d.classList.remove('active'));
+            if (all[active]) all[active].classList.add('active');
+        }
+        grid.addEventListener('scroll', () => {
+            const center = grid.scrollLeft + grid.offsetWidth / 2;
+            let best = 0, bestDist = Infinity;
+            cards.forEach((card, i) => {
+                const dist = Math.abs(card.offsetLeft + card.offsetWidth/2 - center);
+                if (dist < bestDist) { bestDist = dist; best = i; }
+            });
+            updateDots(best);
+        });
+    })();
+</script>
 
 {% if destacados %}
 <section class="destacados">

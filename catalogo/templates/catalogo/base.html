@@ -35,7 +35,6 @@
                         <a href="/admin/" class="nav-link">📦 Admin</a>
                     {% endif %}
                 </nav>
-                <button class="hamburger" id="hamburgerBtn" aria-label="Menú">☰</button>
             </div>
         </div>
     </header>
@@ -82,6 +81,14 @@
     </footer>
 
     <a href="https://wa.me/5218282895407" class="whatsapp-float" aria-label="WhatsApp" title="Cotizar por WhatsApp">💬</a>
+
+    <!-- Barra inferior para móvil -->
+    <nav class="bottom-bar">
+        <a href="{% url 'catalogo:lista' %}" class="bottom-link">🏠<span>Inicio</span></a>
+        <a href="{% url 'catalogo:lista' %}" class="bottom-link">📂<span>Catálogo</span></a>
+        <a href="{% url 'carrito:ver' %}" class="bottom-link">🛒<span>Carrito</span></a>
+        <a href="https://wa.me/5218282895407" class="bottom-link">💬<span>WhatsApp</span></a>
+    </nav>
 
     <script src="{% static 'js/carrito.js' %}"></script>
     <script>
