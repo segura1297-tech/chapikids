@@ -16,7 +16,7 @@
 
     <div class="category-grid">
         <a href="{% url 'catalogo:lista' %}" class="category-card {% if not categoria_actual %}active{% endif %}">
-            <div class="category-card-icon">📂</div>
+            <img src="{% static 'img/TODAS.png' %}" alt="Todas" class="category-card-icon">
             <span class="category-card-name">Todas</span>
         </a>
         {% for categoria in categorias %}
