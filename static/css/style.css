@@ -205,13 +205,14 @@ body {
 .category-card {
     flex: 0 0 auto;
     scroll-snap-align: start;
+    width: 90px;
 }
 
 .category-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0px;
+    gap: 6px;
     background: transparent;
     border: none;
     border-radius: 0;
@@ -226,19 +227,26 @@ body {
     transform: translateY(-3px);
 }
 
+.category-card.active .category-card-icon {
+    border: 3px solid var(--rosa);
+}
+
 .category-card-icon {
-    width: 400px;
-    height: 400px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
-    background: none;
+    background: var(--rosa-claro, #f8e1ef);
     border-radius: 50%;
+    border: 3px solid transparent;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .category-card-icon.placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    font-size: 26px;
 }
 
 .category-card-name {
@@ -1136,6 +1144,7 @@ body {
 
 @media (max-width: 768px) {
     .bottom-bar { display: flex; }
+    .whatsapp-float { bottom: 85px; }
 }
 
 /* ===== Responsive ===== */
