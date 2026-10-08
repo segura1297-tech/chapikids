@@ -32,6 +32,19 @@
         {% endfor %}
     </div>
     <div class="category-dots" id="categoryDots"></div>
+
+    <div class="active-filters">
+        {% if categoria_actual %}
+            {% for c in categorias %}
+                {% if c.slug == categoria_actual %}
+                    <a href="{% url 'catalogo:lista' %}{% if query %}?q={{ query }}{% endif %}" class="filter-chip">📂 {{ c.nombre }} ✕</a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if query %}
+            <a href="{% url 'catalogo:lista' %}{% if categoria_actual %}?categoria={{ categoria_actual }}{% endif %}" class="filter-chip">🔍 "{{ query }}" ✕</a>
+        {% endif %}
+    </div>
 </section>
 
 <script>
@@ -107,7 +120,7 @@
                 </a>
                 <form action="{% url 'carrito:agregar' producto.id %}" method="post" class="add-to-cart">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-add">Agregar al carrito</button>
+                    <button type="submit" class="btn btn-add">🛒 Agregar al carrito</button>
                 </form>
             </div>
         {% endfor %}

@@ -148,6 +148,33 @@ body {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--blanco);
+    padding: 10px 0;
+}
+
+.active-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.filter-chip {
+    background: var(--rosa-claro);
+    color: var(--gris-oscuro);
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.filter-chip:hover {
+    background: var(--morado-claro);
+    color: var(--blanco);
 }
 
 .search-input {
@@ -234,11 +261,11 @@ body {
 .category-card-icon {
     width: 60px;
     height: 60px;
-    object-fit: contain;
-    background: var(--rosa-claro, #f8e1ef);
+    object-fit: cover;
+    background: none;
     border-radius: 50%;
     border: 3px solid transparent;
-    padding: 5px;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -339,6 +366,14 @@ body {
 
 .btn-add {
     width: 100%;
+    background: linear-gradient(135deg, var(--rosa) 0%, var(--morado) 100%);
+    color: var(--blanco);
+    font-weight: 700;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-hover);
 }
 
 /* ===== Botones ===== */
