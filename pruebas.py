@@ -1,113 +1,164 @@
 #!/usr/bin/env python
 """
-Script de pruebas automatizadas para Chapikids Piñatas.
-Ejecutar después de cada modificación para verificar que todo funciona.
+Pruebas de Chapikids.
 
-Uso: python pruebas.py
+ANTES este script usaba `Client()` sin base de datos de prueba, así que
+`probar_modelo_slug()` creaba y borraba filas en el `db.sqlite3` de
+verdad: cada corrida dejaba basura, y si fallaba a media ruta la dejaba
+permanente. Ahora usa `TestCase`, que corre contra una base de datos
+temporal y la destruye al terminar.
+
+Uso:
+    python manage.py test
+    (o bien: pytest, si instalas pytest-django)
 """
 import os
+
 import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chapikids.settings')
 django.setup()
 
-from django.test import Client
+from django.test import Client, TestCase  # noqa: E402
+from django.urls import reverse  # noqa: E402
+
+from catalogo.models import Categoria, Producto  # noqa: E402
 
 
-def probar_paginas():
-    """Prueba las páginas públicas."""
-    print("=" * 50)
-    print("PRUEBAS DE PAGINAS PUBLICAS")
-    print("=" * 50)
+class PaginasticasTestCase(TestCase):
+    """Las páginas públicas responden y muestran lo que deben."""
 
-    c = Client()
+    @classmethod
+    def setUpTestData(cls):
+        cls.categoria = Categoria.objects.create(nombre='Prueba')
+        cls.producto = Producto.objects.create(
+            nombre='Producto de prueba',
+            categoria=cls.categoria,
+            precio=100,
+            disponible=True,
+        )
 
-    paginas = [
-        ('/', 'Catalogo publico'),
-        ('/nosotros/', 'Pagina Quienes Somos'),
-        ('/carrito/', 'Carrito de compras'),
-        ('/pedidos/checkout/', 'Checkout'),
-    ]
+    def test_paginas_publicas(self):
+        for url in [
+            reverse('catalogo:lista'),
+            reverse('catalogo:nosotros'),
+            '/carrito/',
+        ]:
+            with self.subTest(url=url):
+                self.assertEqual(self.client.get(url).status_code, 200)
 
-    for url, nombre in paginas:
-        try:
-            response = c.get(url)
-            estado = "OK" if response.status_code == 200 else "ERROR"
-            print(f"{estado} {nombre}: {response.status_code}")
-        except Exception as e:
-            print(f"ERROR {nombre}: {e}")
+    def test_checkout_sin_carrito_redirige(self):
+        """Sin productos en el carrito, el checkout manda al carrito.
 
-
-def probar_detalle_producto():
-    """Prueba la página de detalle de un producto."""
-    print("\n" + "=" * 50)
-    print("PRUEBA DE DETALLE DE PRODUCTO")
-    print("=" * 50)
-
-    c = Client()
-
-    try:
-        response = c.get('/producto/pinata-luigi/')
-        estado = "OK" if response.status_code == 200 else "ERROR"
-        print(f"{estado} Detalle producto: {response.status_code}")
-
-        contenido = response.content.decode('utf-8')
-        checks = [
-            ('tabs-container', 'Pestanas'),
-            ('specs-table', 'Tabla de caracteristicas'),
-            ('add-to-cart-large', 'Boton agregar al carrito'),
-        ]
-
-        for patron, nombre in checks:
-            presente = "OK" if patron in contenido else "FALTA"
-            print(f"{presente} {nombre}")
-
-    except Exception as e:
-        print(f"ERROR: {e}")
+        No es un error: es el flujo correcto. Antes no se probaba.
+        """
+        respuesta = self.client.get('/pedidos/checkout/')
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertIn('/carrito/', respuesta.url)
+    def test_detalle_de_producto(self):
+        url = f"/producto/{self.producto.slug}/"
+        self.assertEqual(self.client.get(url).status_code, 200)
 
 
-def probar_modelo_slug():
-    """Prueba que el slug se genere automáticamente."""
-    print("\n" + "=" * 50)
-    print("PRUEBA DE SLUG AUTOMATICO")
-    print("=" * 50)
+class SlugTestCase(TestCase):
+    """El slug se genera solo y no se repite."""
 
-    from catalogo.models import Producto, Categoria
-
-    try:
-        cat = Categoria.objects.first()
+    def test_slug_automatico(self):
+        categoria = Categoria.objects.create(nombre='Otra')
         producto = Producto.objects.create(
-            nombre='Test Slug Automatico',
-            categoria=cat,
+            nombre='Piñata Test Automatico',
+            categoria=categoria,
             precio=100,
         )
-        print(f"OK Slug generado: {producto.slug}")
-        producto.delete()
-        print("OK Producto de prueba eliminado")
-    except Exception as e:
-        print(f"ERROR: {e}")
+        self.assertEqual(producto.slug, 'pinata-test-automatico')
+        # El registro se crea dentro de la base de prueba y desaparece
+        # al terminar, así que no hay que borrar nada a mano.
 
 
-def probar_admin():
-    """Prueba acceso al admin."""
-    print("\n" + "=" * 50)
-    print("PRUEBA DE ADMIN")
-    print("=" * 50)
+class CarritoTestCase(TestCase):
+    """El carrito y, sobre todo, el caso que antes lo rompía."""
 
-    c = Client()
+    @classmethod
+    def setUpTestData(cls):
+        cls.categoria = Categoria.objects.create(nombre='Prenda')
+        cls.vestido = Producto.objects.create(
+            nombre='Vestido', categoria=cls.categoria, precio=100,
+            disponible=True,
+        )
+        cls.blusa = Producto.objects.create(
+            nombre='Blusa', categoria=cls.categoria, precio=80,
+            disponible=True,
+        )
 
-    try:
-        response = c.get('/admin/login/')
-        estado = "OK" if response.status_code == 200 else "ERROR"
-        print(f"{estado} Admin login: {response.status_code}")
-    except Exception as e:
-        print(f"ERROR: {e}")
+    def test_agregar_al_carrito(self):
+        self.client.post(f'/carrito/agregar/{self.vestido.pk}/')
+        self.assertEqual(
+            self.client.session['carrito'],
+            {str(self.vestido.pk): {'cantidad': 1}},
+        )
+
+    def test_no_se_agrega_un_producto_no_disponible(self):
+        self.vestido.disponible = False
+        self.vestido.save()
+        self.client.post(f'/carrito/agregar/{self.vestido.pk}/')
+        self.assertEqual(self.client.session.get('carrito', {}), {})
+
+    def test_producto_desactivado_no_rompe_el_carrito(self):
+        """Regresión: esto devolvía 404 y caía toda la página.
+
+        Si el negocio desactiva un producto que el cliente ya tenía, el
+        carrito debe seguir mostrando los demás, no reventar.
+        """
+        self.client.post(f'/carrito/agregar/{self.vestido.pk}/', {'cantidad': 2})
+        self.client.post(f'/carrito/agregar/{self.blusa.pk}/')
+
+        # El negocio desactiva el vestido.
+        self.vestido.disponible = False
+        self.vestido.save()
+
+        respuesta = self.client.get('/carrito/')
+
+        self.assertEqual(
+            respuesta.status_code, 200,
+            'El carrito no debe romperse si un producto se desactiva',
+        )
+        nombres = [i['producto'].nombre for i in respuesta.context['items']]
+        self.assertEqual(nombres, ['Blusa'])
+
+    def test_cantidad_invalida_no_revierte_la_pagina(self):
+        """Antes `int('mucho')` levantaba ValueError y daba error 500."""
+        self.client.post(f'/carrito/agregar/{self.vestido.pk}/')
+        respuesta = self.client.post(
+            f'/carrito/actualizar/{self.vestido.pk}/', {'cantidad': 'mucho'}
+        )
+        self.assertEqual(respuesta.status_code, 302)
+
+
+class FolioTestCase(TestCase):
+    """El folio de los pedidos se numera sin repetirse."""
+
+    def test_folios_consecutivos(self):
+        from pedidos.models import Pedido
+
+        primero = Pedido.objects.create(
+            cliente_nombre='Ana', fecha_evento='2030-01-01'
+        )
+        segundo = Pedido.objects.create(
+            cliente_nombre='Luis', fecha_evento='2030-01-01'
+        )
+
+        n1 = int(primero.folio.split('-')[-1])
+        n2 = int(segundo.folio.split('-')[-1])
+        self.assertEqual(n2, n1 + 1)
+        self.assertTrue(primero.folio.startswith('PED-'))
+
+
+class AdminTestCase(TestCase):
+    def test_el_admin_responde(self):
+        self.assertEqual(self.client.get('/admin/login/').status_code, 200)
 
 
 if __name__ == '__main__':
-    print("\n== INICIANDO PRUEBAS ==\n")
-    probar_paginas()
-    probar_detalle_producto()
-    probar_modelo_slug()
-    probar_admin()
-    print("\n== PRUEBAS COMPLETADAS ==\n")
+    import unittest
+
+    unittest.main(verbosity=2)

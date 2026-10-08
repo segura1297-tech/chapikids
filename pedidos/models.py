@@ -37,19 +37,37 @@ class Pedido(models.Model):
         return f'Pedido {self.folio} - {self.cliente_nombre}'
 
     def save(self, *args, **kwargs):
-        if not self.folio:
-            # Generar folio: PED-2024-0001
-            from datetime import datetime
+        if self.folio:
+            super().save(*args, **kwargs)
+            return
+
+        # El folio se armaba con "el ultimo folio + 1". Si dos cotizaciones
+        # entran al mismo tiempo, las dos leen el mismo ultimo folio,
+        # generan el mismo numero y la segunda revienta con IntegrityError
+        # por la restriccion UNIQUE. Se reintenta unas cuantas veces: en la
+        # practica nunca hace falta mas de uno.
+        from datetime import datetime
+
+        from django.db import IntegrityError, transaction
+
+        for intento in range(5):
             year = datetime.now().year
             ultimo = Pedido.objects.filter(
                 folio__startswith=f'PED-{year}'
             ).order_by('folio').last()
-            if ultimo:
-                numero = int(ultimo.folio.split('-')[-1]) + 1
-            else:
-                numero = 1
+
+            numero = int(ultimo.folio.split('-')[-1]) + 1 if ultimo else 1
             self.folio = f'PED-{year}-{numero:04d}'
-        super().save(*args, **kwargs)
+
+            try:
+                with transaction.atomic():
+                    super().save(*args, **kwargs)
+                return
+            except IntegrityError:
+                # Otro pedido secontro este folio al mismo tiempo: se
+                # descarta el save y se vuelve a calcular.
+                if intento == 4:
+                    raise
 
 
 class PedidoItem(models.Model):

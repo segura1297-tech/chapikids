@@ -14,7 +14,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-chapikids-piñatas-2024-local-dev-key')
+# Sin valor por omision a proposito. Con un default escrito aqui, cualquiera
+# que clone el repositorio arranca con una llave que esta publicada en GitHub,
+# y con ella se pueden falsificar sesiones y tokens de restablecimiento de
+# contrasena. Si falta, Django se detiene aqui mismo. Ver .env.example.
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
@@ -133,7 +137,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
     'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
-    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage'},
+    # Sin el "Manifest" a proposito: esa variante exige haber corrido
+    # `collectstatic` y falla al servir {% static %} si falta el manifiesto
+    # ("Missing staticfiles manifest entry for ..."). Como la app corre con
+    # DEBUG=False en pruebas y en cualquier entorno recien desplegado, eso
+    # se traducía en errores al abrir cualquier pagina. Comprimido (.gz)
+    # sin manifiesto sirve igual de rapido y no tiene esa trampa.
+    'staticfiles': {'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage'},
 }
 
 # Media files
